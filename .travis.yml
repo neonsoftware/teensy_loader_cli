@@ -1,0 +1,45 @@
+# -------------------------------------------------------------------- #
+# On Travis CI, this script checks that teensy_loader_cli builds       #
+# successfully on clean installs on some of the verious linux distros. #
+#                                                                      #
+# The most interesting aspect is the installation of libusb0.1, which  #
+# comes under different names on the various repositories.             # 
+#                                                                      #
+# The file teensy_loader_cli.c contains install instructions for       #
+# libusb0.1. They should manually be kept up to date with the commands # 
+# executed here.                                                       #
+#                                                                      #
+# Latest update: 10 November 2016                                      #
+# -------------------------------------------------------------------- #
+sudo: required
+
+language: bash
+
+services:
+  - docker
+
+script:
+  # Arch Linux
+  - docker run -it pritunl/archlinux:latest  /bin/bash -c "pacman -S --noconfirm git make gcc libusb-compat                &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"
+  # Gentoo
+  - docker run -it vguardiola/gentoo-nginx   /bin/bash -c "emerge dev-vcs/git dev-libs/libusb-compat                       &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"  
+  # Debian
+  - docker run -it debian:latest             /bin/bash -c "apt update && apt install -y git make gcc libusb-dev            &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"  
+  - docker run -it debian:jessie             /bin/bash -c "apt update && apt install -y git make gcc libusb-dev            &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"  
+  - docker run -it debian:stretch            /bin/bash -c "apt update && apt install -y git make gcc libusb-dev            &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"  
+  # (debian based) Ubuntu
+  - docker run -it ubuntu:latest             /bin/bash -c "apt update && apt install -y git make gcc libusb-dev            &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"  
+  - docker run -it ubuntu:16.10              /bin/bash -c "apt update && apt install -y git make gcc libusb-dev            &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"  
+  - docker run -it ubuntu:16.04              /bin/bash -c "apt update && apt install -y git make gcc libusb-dev            &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"  
+  - docker run -it ubuntu:14.04              /bin/bash -c "apt update && apt install -y git make gcc libusb-dev            &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"  
+  - docker run -it ubuntu:12.04              /bin/bash -c "apt-get update && apt-get install -y git make gcc libusb-dev    &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"  
+  # (debian based) Linux Mint
+  - docker run -it vcatechnology/linux-mint  /bin/bash -c "apt update && apt install -y git make gcc libusb-dev            &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"  
+  # RedHat
+  - docker run -it limengyu1990/redhat-base  /bin/bash -c "yum install -y git make gcc libusb-devel                        &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"
+  # (redhat based) Centos
+  - docker run -it centos                    /bin/bash -c "yum install -y git make gcc libusb-devel                        &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"
+  # (redhat based) Fedora
+  - docker run -it fedora:latest             /bin/bash -c "dnf install -y git make gcc libusb-devel                        &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"
+  - docker run -it fedora:23                 /bin/bash -c "dnf install -y git make gcc libusb-devel                        &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"
+  - docker run -it fedora:23                 /bin/bash -c "dnf install -y git make gcc libusb-devel                        &&  git clone https://github.com/PaulStoffregen/teensy_loader_cli.git  &&  cd teensy_loader_cli  &&  make"
